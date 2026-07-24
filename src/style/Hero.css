@@ -33,8 +33,8 @@
 }
 
 .title .highlight {
-  color: #ff0051; /* vermelho neon */
-  text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+  color: #f4f9ff; /* branco gelo */
+  text-shadow: 0 0 8px rgba(244, 249, 255, 0.6), 0 0 16px rgba(180, 220, 255, 0.35);
   margin-left: 0.8rem;
 }
 

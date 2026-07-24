@@ -2,7 +2,7 @@ import "../style/Hero.css";
 function Hero() {
   return (
     <>
-      <section className="hero">
+      <section id="hero" className="hero">
         <div className="title">
           <h1>Study With Me</h1>
           <h1 className="highlight">Alves</h1>

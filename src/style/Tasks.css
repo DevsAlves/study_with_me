@@ -3,54 +3,44 @@
 =========================== */
 .task-page {
   margin-left: 250px; /* espaço da sidebar */
-  padding: 2rem;
+  padding: 2rem 5% 2rem;
   min-height: 100vh;
   background-color: #121212;
   color: #e0e0e0;
   font-family: 'Inter', sans-serif;
+  scroll-margin-top: 20px;
 }
 
 /* ===========================
-   Title
+   Header + Title
 =========================== */
-.task-page .title {
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
   font-size: 3rem;
   font-weight: 900;
   display: flex;
 }
 
-.task-page .highlight {
+.title .highlight {
   color: #ff0051; /* vermelho neon */
   text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
   margin-left: 0.5rem;
 }
 
 /* ===========================
-   Add Task Section
+   Botão Adicionar (com glow)
 =========================== */
-.add-task {
-  display: flex;
-  margin: 2rem 0;
-}
-
-.add-task input {
-  flex: 1;
-  padding: 0.8rem 1rem;
-  border-radius: 8px 0 0 8px;
-  border: none;
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-}
-
-.add-task input::placeholder {
-  color: #777;
-}
-
-.add-task button {
+.add-btn {
   padding: 0.8rem 1.5rem;
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px;
   border: none;
-  background-color: #ff0051; /* vermelho neon */
+  background-color: #ff0051;
   color: #fff;
   cursor: pointer;
   font-weight: 700;
@@ -59,70 +49,107 @@
   transition: all 0.3s ease;
 }
 
-.add-task button:hover {
-  background-color: #ff3366; /* tom mais claro ao passar o mouse */
+.add-btn:hover {
+  background-color: #ff3366;
   text-shadow: 0 0 15px #ff0055, 0 0 30px #ff0055;
   box-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055 inset;
   transform: scale(1.05);
 }
 
 /* ===========================
-   Task List
+   Empty state
+=========================== */
+.tasks-empty {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+
+/* ===========================
+   Task List / Cards
 =========================== */
 .task-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 700px;
 }
 
-.task-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 1rem;
-  margin-bottom: 0.5rem;
+.task-card {
+  padding: 1rem 1.2rem;
   border-radius: 8px;
   background-color: #1a1a1a;
   transition: all 0.2s;
 }
 
-.task-list li.done span {
+.task-card:hover {
+  background-color: rgba(255, 0, 81, 0.1);
+}
+
+.task-card.done .task-text {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
-.task-list li:hover {
-  background-color: rgba(255, 0, 81, 0.1);
-}
-
 /* ===========================
-   Texto da tarefa
+   Conteúdo do card (modo normal)
 =========================== */
-.task-list li span {
-  flex: 1; /* ocupa o máximo de espaço restante */
-  margin-right: 0.5rem;
-}
-
-/* ===========================
-   Botões dentro da tarefa
-=========================== */
-.button-group {
+.task-main {
   display: flex;
-  gap: 0.5rem; /* espaço entre os botões */
+  align-items: center;
+  gap: 1rem;
 }
 
-/* Botão comum */
-.task-list li button {
+.task-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.task-text {
+  font-size: 1rem;
+}
+
+.link-tag {
+  display: inline-block;
+  width: fit-content;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* ===========================
+   Botões (concluir / editar / deletar)
+=========================== */
+.button-group,
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.card-actions {
+  margin-top: 0.8rem;
+  justify-content: flex-end;
+}
+
+.complete-btn,
+.edit-btn,
+.delete-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0.2rem 0.4rem;
+  font-size: 1.1rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 4px;
   transition: all 0.2s;
 }
 
-/* Botão concluir */
 .complete-btn {
   color: #00ff8c; /* verde neon */
 }
@@ -132,7 +159,15 @@
   transform: scale(1.1);
 }
 
-/* Botão deletar */
+.edit-btn {
+  color: #3b9bff; /* azul neon */
+}
+
+.edit-btn:hover {
+  text-shadow: 0 0 10px #3b9bff, 0 0 20px #3b9bff;
+  transform: scale(1.1);
+}
+
 .delete-btn {
   color: #ff0051; /* vermelho neon */
 }
@@ -143,10 +178,69 @@
 }
 
 /* ===========================
-   Mensagem de lista vazia
+   Formulário de edição inline
 =========================== */
-.task-list li.empty {
-  text-align: center;
+.task-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.task-name-input,
+.link-input,
+.category-select {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #2a2a2a;
+  background-color: #111;
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.task-name-input::placeholder,
+.link-input::placeholder {
   color: #777;
-  font-style: italic;
+}
+
+.task-name-input:focus,
+.link-input:focus,
+.category-select:focus {
+  border-color: #ff0055;
+}
+
+.task-edit-row {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.category-select {
+  flex: 0 0 140px;
+  cursor: pointer;
+}
+
+/* Corrige a aparência nativa do <select> em navegadores diferentes */
+.category-select option {
+  background-color: #111;
+  color: #e0e0e0;
+}
+
+.link-input {
+  flex: 1;
+}
+
+.save-btn {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #2ecc71;
+  color: #0d1f14;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: auto;
+}
+
+.save-btn:hover {
+  box-shadow: 0 0 10px #2ecc71;
 }
