@@ -1,0 +1,196 @@
+.clock-page {
+  min-height: 100vh;
+  margin-left: 250px;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: "Inter", sans-serif;
+  padding: 4rem 5% 2rem;
+  scroll-margin-top: 20px;
+}
+
+.clock-page .title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+}
+
+.clock-page .highlight {
+  color: #ff0051;
+  text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+  margin-left: 0.5rem;
+}
+
+.clock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+}
+
+/* ===========================
+   Card do relógio digital
+=========================== */
+.clock-card {
+  background-color: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.digital-clock {
+  font-size: 3.2rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: #f4f9ff;
+  text-shadow: 0 0 10px rgba(244, 249, 255, 0.5), 0 0 20px rgba(180, 220, 255, 0.3);
+}
+
+.clock-date {
+  font-size: 1rem;
+  color: #b0b0b0;
+}
+
+.clock-tz {
+  font-size: 0.8rem;
+  color: #6e6e6e;
+  margin-top: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===========================
+   Card do Pomodoro
+=========================== */
+.pomodoro-card {
+  background-color: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.pomodoro-mode-tag {
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pomodoro-mode-tag.work {
+  color: #ff0051;
+  background-color: rgba(255, 0, 81, 0.15);
+}
+
+.pomodoro-mode-tag.break {
+  color: #00ff8c;
+  background-color: rgba(0, 255, 140, 0.15);
+}
+
+/* Anel de progresso */
+.progress-ring-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* começa do topo */
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: #2a2a2a;
+  stroke-width: 10;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+}
+
+.progress-ring-fill.work {
+  stroke: #ff0051;
+  filter: drop-shadow(0 0 6px #ff0055);
+}
+
+.progress-ring-fill.break {
+  stroke: #00ff8c;
+  filter: drop-shadow(0 0 6px #00ff8c);
+}
+
+.timer-display {
+  position: absolute;
+  font-size: 2.4rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: #e0e0e0;
+}
+
+/* Controles */
+.pomodoro-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.control-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #2a2a2a;
+  background-color: #111;
+  color: #b0b0b0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+  border-color: #ff0055;
+  color: #ff0055;
+}
+
+.control-btn.main {
+  width: 56px;
+  height: 56px;
+  font-size: 1.2rem;
+  background-color: #ff0051;
+  border: none;
+  color: #fff;
+  box-shadow: 0 0 12px #ff0055;
+}
+
+.control-btn.main:hover {
+  background-color: #ff3366;
+  box-shadow: 0 0 20px #ff0055;
+  color: #fff;
+}
+
+.cycles-count {
+  font-size: 0.9rem;
+  color: #b0b0b0;
+}
+
+.cycles-count strong {
+  color: #f4f9ff;
+}
