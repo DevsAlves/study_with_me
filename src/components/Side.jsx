@@ -12,6 +12,7 @@ function Side() {
           <a href="#hero" className="active">
             Tela inicial
           </a>
+          <a href="#clock">Relógio</a>
           <a href="#task-page">Tarefas</a>
           <a href="#projetos">Projetos</a>
         </nav>
