@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import "../style/Clock.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,17 +11,21 @@ import {
 const WORK_DURATION = 25 * 60; // 25 minutos em segundos
 const BREAK_DURATION = 5 * 60; // 5 minutos em segundos
 
-const RADIUS = 90;
+const RADIUS = 100;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-function formatClock(date) {
-  return new Intl.DateTimeFormat("pt-BR", {
+const STAR_COUNT = 36; // estrelas fixas piscando no fundo
+const SHOOTING_STAR_COUNT = 5; // estrelas cadentes cruzando o céu
+
+function formatClockParts(date) {
+  const formatted = new Intl.DateTimeFormat("pt-BR", {
     timeZone: "America/Sao_Paulo",
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
     hour12: false,
   }).format(date);
+  return formatted.split(":"); // [hh, mm, ss]
 }
 
 function formatDate(date) {
@@ -50,6 +54,32 @@ function Clock() {
     const interval = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const [hh, mm, ss] = formatClockParts(now);
+
+  // ===== Céu estrelado (gerado uma única vez, não a cada segundo) =====
+  const stars = useMemo(
+    () =>
+      Array.from({ length: STAR_COUNT }).map(() => ({
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        size: `${1 + Math.random() * 1.6}px`,
+        delay: `${Math.random() * 5}s`,
+        duration: `${2.5 + Math.random() * 3}s`,
+      })),
+    []
+  );
+
+  const shootingStars = useMemo(
+    () =>
+      Array.from({ length: SHOOTING_STAR_COUNT }).map(() => ({
+        top: `${Math.random() * 45}%`,
+        left: `${Math.random() * 65}%`,
+        delay: `${Math.random() * 10}s`,
+        duration: `${5 + Math.random() * 4}s`,
+      })),
+    []
+  );
 
   // ===== Pomodoro =====
   const [mode, setMode] = useState("work"); // "work" | "break"
@@ -102,38 +132,95 @@ function Clock() {
   const progress = 1 - secondsLeft / totalForMode;
   const dashOffset = CIRCUMFERENCE * (1 - progress);
 
+  // ===== Micro-animações (pop) =====
+  const [modeSwitched, setModeSwitched] = useState(false);
+  useEffect(() => {
+    setModeSwitched(true);
+    const t = setTimeout(() => setModeSwitched(false), 500);
+    return () => clearTimeout(t);
+  }, [mode]);
+
+  const [cyclePop, setCyclePop] = useState(false);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    setCyclePop(true);
+    const t = setTimeout(() => setCyclePop(false), 450);
+    return () => clearTimeout(t);
+  }, [cyclesCompleted]);
+
   return (
-    <section id="clock" className="clock-page">
+    <section id="clock" className={`clock-page mode-${mode}`}>
+      {/* Céu estrelado de fundo */}
+      <div className="starfield" aria-hidden="true">
+        {stars.map((star, i) => (
+          <span
+            key={`star-${i}`}
+            className="star"
+            style={{
+              top: star.top,
+              left: star.left,
+              width: star.size,
+              height: star.size,
+              animationDelay: star.delay,
+              animationDuration: star.duration,
+            }}
+          />
+        ))}
+
+        {shootingStars.map((star, i) => (
+          <span
+            key={`shoot-${i}`}
+            className="shooting-star"
+            style={{
+              top: star.top,
+              left: star.left,
+              animationDelay: star.delay,
+              animationDuration: star.duration,
+            }}
+          />
+        ))}
+      </div>
+
       <h1 className="title">
         Relógio <span className="highlight">& Foco</span>
       </h1>
 
       <div className="clock-grid">
         {/* Card do relógio digital */}
-        <div className="clock-card">
-          <span className="digital-clock">{formatClock(now)}</span>
+        <div className="clock-card animate-in">
+          <span className="digital-clock" aria-label={formatClockParts(now).join(":")}>
+            <span className="clock-segment">{hh}</span>
+            <span className="clock-colon">:</span>
+            <span className="clock-segment">{mm}</span>
+            <span className="clock-colon">:</span>
+            <span className="clock-segment">{ss}</span>
+          </span>
           <span className="clock-date">{formatDate(now)}</span>
           <span className="clock-tz">Horário de Brasília</span>
         </div>
 
         {/* Card do Pomodoro */}
-        <div className="pomodoro-card">
-          <div className={`pomodoro-mode-tag ${mode}`}>
+        <div className="pomodoro-card animate-in">
+          <div className={`pomodoro-mode-tag ${mode} ${modeSwitched ? "pop" : ""}`}>
             {mode === "work" ? "Foco" : "Descanso"}
           </div>
 
-          <div className="progress-ring-wrapper">
-            <svg className="progress-ring" viewBox="0 0 200 200">
+          <div className={`progress-ring-wrapper ${isRunning ? "running" : ""} ${modeSwitched ? "pop" : ""}`}>
+            <svg className="progress-ring" viewBox="0 0 220 220">
               <circle
                 className="progress-ring-bg"
-                cx="100"
-                cy="100"
+                cx="110"
+                cy="110"
                 r={RADIUS}
               />
               <circle
                 className={`progress-ring-fill ${mode}`}
-                cx="100"
-                cy="100"
+                cx="110"
+                cy="110"
                 r={RADIUS}
                 strokeDasharray={CIRCUMFERENCE}
                 strokeDashoffset={dashOffset}
@@ -168,7 +255,7 @@ function Clock() {
             </button>
           </div>
 
-          <span className="cycles-count">
+          <span className={`cycles-count ${cyclePop ? "pop" : ""}`}>
             Ciclos concluídos hoje: <strong>{cyclesCompleted}</strong>
           </span>
         </div>

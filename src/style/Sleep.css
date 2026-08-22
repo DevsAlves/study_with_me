@@ -1,0 +1,457 @@
+/* ===========================
+   Painel Anti-Sono
+   Segue a paleta do app (clock-page)
+=========================== */
+
+.sleep-page {
+  min-height: 100vh;
+  margin-left: 250px;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: "Inter", sans-serif;
+  padding: 4rem 5% 2rem;
+  scroll-margin-top: 20px;
+}
+
+.sleep-page .title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 0.6rem;
+}
+
+.sleep-page .highlight {
+  color: #ff0051;
+  text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+  margin-left: 0.5rem;
+}
+
+.sleep-page .subtitle {
+  color: #b0b0b0;
+  font-size: 1rem;
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+}
+
+.sleep-grid {
+  display: grid;
+  gap: 2rem;
+  max-width: 900px;
+}
+
+/* ===========================
+   Card genérico (base de todas as seções)
+=========================== */
+.sleep-card {
+  background-color: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.sleep-card-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #6e6e6e;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.sleep-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f4f9ff;
+  margin-bottom: 0.3rem;
+}
+
+.sleep-section-sub {
+  font-size: 0.9rem;
+  color: #b0b0b0;
+  margin-bottom: 1.3rem;
+}
+
+/* ===========================
+   Gauge (nível de sono)
+=========================== */
+.gauge-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sleep-gauge {
+  width: 260px;
+  max-width: 80vw;
+  height: auto;
+}
+
+.sleep-needle {
+  transform-origin: 130px 140px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gauge-readout {
+  text-align: center;
+  margin-top: -0.6rem;
+}
+
+.gauge-readout .big {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.4s, text-shadow 0.4s;
+}
+
+.gauge-readout .label {
+  font-size: 0.8rem;
+  color: #b0b0b0;
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.slider-row {
+  margin: 1.6rem auto 0;
+  max-width: 420px;
+}
+
+.sleep-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #00ff8c, #ffb020, #ff0051);
+  outline: none;
+  cursor: pointer;
+}
+
+.sleep-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  border: 3px solid #121212;
+  box-shadow: 0 0 0 2px #2a2a2a;
+  cursor: pointer;
+}
+
+.sleep-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  border: 3px solid #121212;
+  cursor: pointer;
+}
+
+.slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: #6e6e6e;
+  margin-top: 0.5rem;
+}
+
+.sleep-verdict {
+  margin-top: 1.8rem;
+  background-color: #121212;
+  border: 1px solid #2a2a2a;
+  border-left: 3px solid #ffb020;
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  transition: border-color 0.4s;
+}
+
+.sleep-verdict h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: #f4f9ff;
+}
+
+.sleep-verdict p {
+  color: #b0b0b0;
+  font-size: 0.92rem;
+}
+
+/* ===========================
+   Timer de emergência
+=========================== */
+.sleep-timer-card {
+  display: flex;
+  gap: 1.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.sleep-ring-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.sleep-ring {
+  width: 120px;
+  height: 120px;
+  transform: rotate(-90deg);
+}
+
+.sleep-ring-bg {
+  fill: none;
+  stroke: #2a2a2a;
+  stroke-width: 10;
+}
+
+.sleep-ring-fill {
+  fill: none;
+  stroke: #ff0051;
+  stroke-width: 10;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px #ff0055);
+  transition: stroke-dashoffset 1s linear;
+}
+
+.sleep-ring-time {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: #e0e0e0;
+}
+
+.sleep-timer-controls {
+  flex: 1;
+  min-width: 220px;
+}
+
+.sleep-timer-controls p {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.sleep-move-suggestion {
+  color: #ffb020;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  min-height: 1.2em;
+}
+
+.sleep-btn {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background-color: #ff0051;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 12px #ff0055;
+  transition: all 0.2s ease;
+}
+
+.sleep-btn:hover {
+  background-color: #ff3366;
+  box-shadow: 0 0 20px #ff0055;
+  transform: translateY(-1px);
+}
+
+.sleep-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+.sleep-btn.ghost {
+  background-color: transparent;
+  color: #e0e0e0;
+  border: 1px solid #2a2a2a;
+  box-shadow: none;
+  margin-left: 0.6rem;
+}
+
+.sleep-btn.ghost:hover {
+  border-color: #ff0055;
+  color: #ff0055;
+  box-shadow: none;
+}
+
+/* ===========================
+   Toggle passivo / ativo
+=========================== */
+.sleep-toggle-bar {
+  display: flex;
+  background-color: #121212;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 1.2rem;
+}
+
+.sleep-toggle-bar button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #b0b0b0;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sleep-toggle-bar button.active {
+  background-color: #ff0051;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(255, 0, 81, 0.4);
+}
+
+.sleep-toggle-item {
+  font-size: 0.92rem;
+  color: #e0e0e0;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sleep-toggle-item:last-child {
+  border-bottom: none;
+}
+
+.sleep-risk-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sleep-risk-tag.high {
+  color: #ff0051;
+}
+
+.sleep-risk-tag.medium {
+  color: #ffb020;
+}
+
+.sleep-risk-tag.low {
+  color: #00ff8c;
+}
+
+/* ===========================
+   Cards de prevenção
+=========================== */
+.sleep-prevention-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.sleep-prevention-card {
+  background-color: #121212;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  padding: 1.3rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.sleep-prevention-card:hover {
+  border-color: #ff0051;
+}
+
+.sleep-prevention-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #00ff8c;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sleep-prevention-card h4 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #f4f9ff;
+  margin: 0.5rem 0 0.4rem;
+}
+
+.sleep-prevention-card p {
+  color: #b0b0b0;
+  font-size: 0.88rem;
+  display: none;
+}
+
+.sleep-prevention-card.open p {
+  display: block;
+}
+
+.sleep-prevention-card .chevron {
+  float: right;
+  color: #6e6e6e;
+  transition: transform 0.2s ease;
+}
+
+.sleep-prevention-card.open .chevron {
+  transform: rotate(180deg);
+}
+
+/* ===========================
+   Gerador de micro-passo
+=========================== */
+.sleep-micro-row {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.sleep-micro-row input[type="text"] {
+  flex: 1;
+  min-width: 180px;
+  background-color: #121212;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  color: #e0e0e0;
+  font-family: "Inter", sans-serif;
+  font-size: 0.92rem;
+}
+
+.sleep-micro-row input[type="text"]:focus {
+  outline: none;
+  border-color: #ff0051;
+}
+
+.sleep-micro-output {
+  font-size: 0.95rem;
+  color: #00ff8c;
+  min-height: 1.4em;
+  padding-top: 0.4rem;
+}
+
+@media (max-width: 560px) {
+  .sleep-page {
+    margin-left: 0;
+    padding: 2rem 5%;
+  }
+
+  .sleep-timer-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
