@@ -1,0 +1,218 @@
+.pomodoro-page {
+  position: relative;
+  min-height: 100vh;
+  margin-left: 250px;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===========================
+   Peça central — sem card, sem borda
+=========================== */
+.pomodoro-focus {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  animation: fadeInUp 0.6s ease both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pomodoro-mode-tag {
+  padding: 0.3rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+.pomodoro-mode-tag.pop {
+  animation: tagPop 0.5s ease;
+}
+
+@keyframes tagPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.pomodoro-mode-tag.work {
+  color: #ff0051;
+  background-color: rgba(255, 0, 81, 0.15);
+}
+
+.pomodoro-mode-tag.break {
+  color: #b0b0b0;
+  background-color: transparent;
+  border: 1px solid #2a2a2a;
+}
+
+/* Anel — tamanho equilibrado, peça central da tela */
+.progress-ring-wrapper {
+  position: relative;
+  width: min(260px, 65vw);
+  height: min(260px, 65vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring-wrapper.pop {
+  animation: ringPop 0.5s ease;
+}
+
+@keyframes ringPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: #2a2a2a;
+  stroke-width: 8;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear, stroke 0.4s ease;
+}
+
+.progress-ring-fill.work {
+  stroke: #ff0051;
+  filter: drop-shadow(0 0 6px #ff0055);
+}
+
+.progress-ring-fill.break {
+  stroke: #6e6e6e;
+  filter: none;
+}
+
+.progress-ring-wrapper.running .progress-ring-fill.work {
+  animation: glowBreatheWork 2.4s ease-in-out infinite;
+}
+
+@keyframes glowBreatheWork {
+  0%, 100% { filter: drop-shadow(0 0 6px #ff0055); }
+  50% { filter: drop-shadow(0 0 14px #ff0055); }
+}
+
+/* Timer — grande o suficiente pra ser o foco, sem exagero */
+.timer-display {
+  position: absolute;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: #f4f9ff;
+  letter-spacing: -0.01em;
+}
+
+/* Controles */
+.pomodoro-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.control-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #2a2a2a;
+  background-color: #111;
+  color: #b0b0b0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+  border-color: #ff0055;
+  color: #ff0055;
+}
+
+.control-btn:active {
+  transform: scale(0.92);
+}
+
+.control-btn.main {
+  width: 56px;
+  height: 56px;
+  font-size: 1.2rem;
+  background-color: #ff0051;
+  border: none;
+  color: #fff;
+  box-shadow: 0 0 12px #ff0055;
+}
+
+.control-btn.main:hover {
+  background-color: #ff3366;
+  box-shadow: 0 0 20px #ff0055;
+  color: #fff;
+}
+
+.control-btn.main:active {
+  transform: scale(0.92);
+}
+
+.cycles-count {
+  font-size: 0.85rem;
+  color: #b0b0b0;
+  transition: transform 0.2s ease;
+}
+
+.cycles-count.pop {
+  animation: cyclesPop 0.45s ease;
+}
+
+@keyframes cyclesPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.2); color: #f4f9ff; }
+  100% { transform: scale(1); }
+}
+
+.cycles-count strong {
+  color: #f4f9ff;
+}
+
+/* ===========================
+   Acessibilidade
+=========================== */
+@media (prefers-reduced-motion: reduce) {
+  .pomodoro-focus,
+  .pomodoro-mode-tag.pop,
+  .progress-ring-wrapper.pop,
+  .progress-ring-wrapper.running .progress-ring-fill.work,
+  .cycles-count.pop {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .pomodoro-page {
+    margin-left: 0;
+    padding: 2rem 5%;
+  }
+}
