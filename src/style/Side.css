@@ -9,10 +9,18 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem 1rem;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.7);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
   font-family: 'Inter', sans-serif;
   color: #e0e0e0;
   overflow: hidden;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+/* Volta ao normal quando o mouse está em cima ou o foco está dentro dela */
+.sidebar:hover,
+.sidebar:focus-within {
+  opacity: 1;
 }
 
 /* Logo */
@@ -24,8 +32,8 @@
 
 .sidebar .logo .highlight {
   color: #ff0051; /* vermelho neon */
-  text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
-    margin-left: 0.8rem;
+  text-shadow: 0 0 6px #ff0055, 0 0 12px #ff0055;
+  margin-left: 0.8rem;
 }
 
 /* Menu */
@@ -37,7 +45,7 @@
 
 .sidebar .menu a {
   text-decoration: none;
-  color: #b0b0b0;
+  color: #6e6e6e; /* mais apagado em repouso */
   padding: 0.8rem 1rem;
   margin: 0.3rem 0;
   border-radius: 8px;
@@ -57,14 +65,14 @@
   background-color: rgba(255, 0, 81, 0.15);
 }
 
-/* Neon glow efeito de fundo */
+/* Neon glow efeito de fundo — mais discreto */
 .sidebar::before,
 .sidebar::after {
   content: '';
   position: absolute;
   border-radius: 50%;
   filter: blur(120px);
-  opacity: 0.3;
+  opacity: 0.12;
 }
 
 .sidebar::before {
@@ -83,3 +91,9 @@
   right: -50px;
 }
 
+/* Acessibilidade: sem transição de opacidade para quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
+}

@@ -10,7 +10,7 @@ function Side() {
         </div>
         <nav className="menu">
           <a href="#task-page">Tarefas</a>
-          <a href="#clock">Relógio</a>
+          <a href="#pomodoro">Relógio</a>
           <a href="#sleep">Painel Anti-sono</a>
           <a href="#projetos">Projetos</a>
         </nav>
