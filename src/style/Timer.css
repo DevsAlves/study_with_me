@@ -1,0 +1,258 @@
+.timer-page {
+  position: relative;
+  min-height: 100vh;
+  margin-left: 250px;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===========================
+   Peça central — sem card, sem borda
+=========================== */
+.timer-focus {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  animation: fadeInUp 0.6s ease both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tag de status (Pronto / Em andamento / Concluído) */
+.timer-status-tag {
+  padding: 0.3rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #b0b0b0;
+  background-color: transparent;
+  border: 1px solid #2a2a2a;
+  transition: all 0.3s ease;
+}
+
+.timer-status-tag.running {
+  color: #ff0051;
+  background-color: rgba(255, 0, 81, 0.15);
+  border-color: transparent;
+}
+
+.timer-status-tag.done {
+  color: #050505;
+  background-color: #ffffff;
+  border-color: transparent;
+  animation: tagPop 0.5s ease;
+}
+
+@keyframes tagPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Anel de progresso — mesmo padrão do Pomodoro */
+.progress-ring-wrapper {
+  position: relative;
+  width: min(260px, 65vw);
+  height: min(260px, 65vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: #2a2a2a;
+  stroke-width: 8;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke: #ff0051;
+  stroke-width: 8;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px #ff0055);
+  transition: stroke-dashoffset 1s linear;
+}
+
+.progress-ring-wrapper.running .progress-ring-fill {
+  animation: glowBreathe 2.4s ease-in-out infinite;
+}
+
+@keyframes glowBreathe {
+  0%, 100% { filter: drop-shadow(0 0 6px #ff0055); }
+  50% { filter: drop-shadow(0 0 14px #ff0055); }
+}
+
+/* Campos editáveis de tempo, no lugar do timer estático */
+.timer-input-group {
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.timer-input {
+  width: 2.2ch;
+  background: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-family: inherit;
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: #f4f9ff;
+  letter-spacing: -0.01em;
+  caret-color: #ff0051;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.timer-input:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.timer-input:focus:not(:disabled) {
+  background-color: rgba(255, 0, 81, 0.12);
+}
+
+.timer-input:disabled {
+  color: #f4f9ff;
+  cursor: default;
+}
+
+.timer-input::-webkit-outer-spin-button,
+.timer-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.timer-colon {
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  font-weight: 900;
+  color: #6e6e6e;
+  margin: 0 0.05em;
+}
+
+/* Atalhos rápidos de tempo */
+.timer-presets {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 320px;
+}
+
+.preset-chip {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #b0b0b0;
+  background-color: transparent;
+  border: 1px solid #2a2a2a;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preset-chip:hover {
+  color: #ff0051;
+  border-color: #ff0055;
+  background-color: rgba(255, 0, 81, 0.1);
+}
+
+/* Controles */
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.control-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #2a2a2a;
+  background-color: #111;
+  color: #b0b0b0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+  border-color: #ff0055;
+  color: #ff0055;
+}
+
+.control-btn:active {
+  transform: scale(0.92);
+}
+
+.control-btn.main {
+  width: 56px;
+  height: 56px;
+  font-size: 1.2rem;
+  background-color: #ff0051;
+  border: none;
+  color: #fff;
+  box-shadow: 0 0 12px #ff0055;
+}
+
+.control-btn.main:hover {
+  background-color: #ff3366;
+  box-shadow: 0 0 20px #ff0055;
+  color: #fff;
+}
+
+.control-btn.main:active {
+  transform: scale(0.92);
+}
+
+.sessions-count {
+  font-size: 0.85rem;
+  color: #b0b0b0;
+}
+
+.sessions-count strong {
+  color: #f4f9ff;
+}
+
+/* ===========================
+   Acessibilidade
+=========================== */
+@media (prefers-reduced-motion: reduce) {
+  .timer-focus,
+  .timer-status-tag.done,
+  .progress-ring-wrapper.running .progress-ring-fill {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .timer-page {
+    margin-left: 0;
+    padding: 2rem 5%;
+  }
+}
